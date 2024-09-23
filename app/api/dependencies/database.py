@@ -8,7 +8,7 @@ load_dotenv()
 
 url_database = os.getenv('URL_DATABASE')
 
-engine = create_engine(url_database)
+engine = create_engine(url_database)    
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

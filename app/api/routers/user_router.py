@@ -3,16 +3,19 @@ from fastapi.responses import JSONResponse
 from api.schemas.user_schema import user_schema_create
 from api.dependencies.database import get_db
 from sqlalchemy.orm import Session
-from app.api.models.user_model import Users
+from api.models.user_model import Users
 
 user_router = APIRouter()
 
 
 @user_router.get('/{i}', tags=['Users']) #Tag sirve para ser claro en la documentacion
 async def get_user_by_id(i:int, db: Session = Depends(get_db)):
- 
-    db_user: Users = db.query(Users).filter(Users.id == i).first()
-    return db_user.user_name
+    
+    db_user: Users | None = db.query(Users).filter(Users.user_id == i).first()
+    if db_user is not None:
+        return db_user.user_name
+    else:
+        return 'Noup'
 
 
 @user_router.post('/', tags=['Users'])
