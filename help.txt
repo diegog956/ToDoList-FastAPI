@@ -1,0 +1,4 @@
+# En routers van las rutas
+# En models los modelos de pydantic
+# En schemas van los modelos de sqlalchemy
+
