@@ -9,7 +9,7 @@ app = FastAPI(title='ToDoList')
 def home():
     return JSONResponse(content='Welcome', status_code=status.HTTP_200_OK)
 
-app.include_router(prefix='/users',router=user_router)
+app.include_router(prefix='/API/users',router=user_router)
 
 if __name__ == '__main__':
 
