@@ -1,2 +1,6 @@
 #Ignorar el archivo .env
 .env
+
+#Claves secretas y algoritmos
+SECRET_KEY = "9d3VKydQMnV0yWaOf"
+ALGORITHM = 'HS256'

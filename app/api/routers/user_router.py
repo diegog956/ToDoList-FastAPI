@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends, HTTPException
 from fastapi.responses import JSONResponse
-from api.schemas.user_schema import UserSchemaCreate
+from api.schemas.user_schema import UserSchemaCreate, UserResponse
 from api.dependencies.database import get_db
 from sqlalchemy.orm import Session
 from api.models.user_model import Users
@@ -10,21 +10,21 @@ import bcrypt
 user_router = APIRouter()
 
 @user_router.get('/{i}', tags=['Users']) #Tag sirve para ser claro en la documentacion
-async def get_user_by_id(i:int, db: Session = Depends(get_db)):
+async def get_user_by_id(i:int, db: Session = Depends(get_db)) -> str:
     
     db_user: Users | None = db.query(Users).filter(Users.user_id == i).first()
     if db_user is not None:
         return db_user.user_name
     else:
-        return 'Noup'
+        raise HTTPException(detail='User not found in database.', status_code=status.HTTP_404_NOT_FOUND)
 
-@user_router.get('/', tags=['Users'])
+@user_router.get('/', tags=['Users'], response_model=List[UserResponse])
 async def get_all_users(db: Session = Depends(get_db)):
-    users: List[Users] = db.query(Users).all()
+    users = db.query(Users).all()
     if users:
         return users
     else:
-        return JSONResponse(content='No users registered in database', status_code=status.HTTP_404_NOT_FOUND)
+        raise HTTPException(detail='No users registered in database', status_code=status.HTTP_404_NOT_FOUND)
 
 
 @user_router.post('/', tags=['Users'])

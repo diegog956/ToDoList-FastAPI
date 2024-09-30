@@ -24,3 +24,11 @@ class UserSchemaCreate(BaseModel):
         else:
             return value #Recordar siempre devolver el valor validado.
 
+    # class Config:
+    #     orm_mode = True
+
+class UserResponse(BaseModel):
+    user_name: str
+    
+    class Config:
+        orm_mode = True
