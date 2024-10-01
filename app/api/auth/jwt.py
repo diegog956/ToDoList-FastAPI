@@ -17,13 +17,14 @@ class TokenResponse(BaseModel):
     access_token: str
     token_type: str
 
-@login_router.get('/login2', response_model=str)
-async def a():
-    return 'BOCA'
+# @login_router.get('/login2', response_model=str)
+# async def a():
+#     return 'BOCA'
 
 
 @login_router.post('/login', response_model=TokenResponse) #Retorna un JWT si es valido el user y el password.
 async def login(data_form: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db))-> TokenResponse:
+    print('Boca2')
     username = data_form.username
     password = data_form.password
     user: Users|None = db.query(Users).filter(Users.user_name == username).first()
@@ -36,6 +37,7 @@ async def login(data_form: Annotated[OAuth2PasswordRequestForm, Depends()], db: 
                  }
         
         token_str = encode_token(payload)
+        print(token_str)
         return TokenResponse(access_token=token_str, token_type='bearer')
     else:
 

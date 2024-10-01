@@ -11,21 +11,19 @@ app = FastAPI(title='ToDoList')
 
 @app.middleware('http')
 async def defino_middle(request: Request, call_next):
-    if request.url.path.startswith("/login2"):
-        print('Con')
-        # token = request.headers.get('Authorization')
-        # print(token)
-        # if token is None:
-        #     raise HTTPException(status_code=401, detail="Token missing")
-        # else:
+    print(request.url.path)
+    if request.url.path in ['/users']:
         
-        #     validate_token(token)
-
-        #     response = await call_next(request)
-        #     print('Post')
-        #     return response 
+        token = request.headers.get('Authorization')
+        
+        if token is None:
+            raise HTTPException(status_code=401, detail="Token missing")
+        else:
+            validate_token(token)
+    
+    print('Boca')
     response = await call_next(request)
-    print('Sin')
+    
     return response 
 
 @app.get('/')
