@@ -9,22 +9,24 @@ app = FastAPI(title='ToDoList')
 
 #@app.add_middleware() Para cuando lo coloque en otra carpeta, se importa y se agrega.
 
-@app.middleware('http')
-async def defino_middle(request: Request, call_next):
-    print(request.url.path)
-    if request.url.path in ['/users']:
+#Los middleware son para todas o casi todas las rutas. (Ver Loggin o CORS)
+
+# @app.middleware('http')
+# async def defino_middle(request: Request, call_next):
+#     print(request.url.path)
+#     if request.url.path in ['/users']:
         
-        token = request.headers.get('Authorization')
+#         token = request.headers.get('Authorization')
         
-        if token is None:
-            raise HTTPException(status_code=401, detail="Token missing")
-        else:
-            validate_token(token)
+#         if token is None:
+#             raise HTTPException(status_code=401, detail="Token missing")
+#         else:
+#             validate_token(token)
     
-    print('Boca')
-    response = await call_next(request)
+#     print('Boca')
+#     response = await call_next(request)
     
-    return response 
+#     return response 
 
 @app.get('/')
 def home():
