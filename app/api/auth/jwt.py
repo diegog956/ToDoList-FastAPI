@@ -45,7 +45,20 @@ async def login(data_form: Annotated[OAuth2PasswordRequestForm, Depends()], db: 
 
 
 
-def encode_token(payload: dict)->str:
+def encode_token(payload: dict)->str: 
+    '''
+    Crea el Token en dado un login exitoso
+
+    Args:
+
+    payload (dict): Datos del usuario. 
+
+    Returns:
+
+    token: Retorna un Json Web Token con los datos del usuario.
+    
+    '''
+    
     token = jwt.encode(payload,os.getenv('SECRET_KEY'), os.getenv('ALGORITHM'))
     return token
 

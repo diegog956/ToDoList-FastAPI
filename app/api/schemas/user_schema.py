@@ -1,10 +1,10 @@
 from pydantic import BaseModel, Field, field_validator
-from typing import Optional
+
 
 
 class UserSchemaCreate(BaseModel):
     
-    user_name: str = Field(max_length=50)
+    user_name: str = Field(...,max_length=50)
     password: str = Field(min_length=6, description='Password must have at least 6 characters and 1 number.')
 
     model_config = {'json_schema_extra':{ #Cambia el valor por defecto del esquema de ejemplo 
@@ -31,4 +31,4 @@ class UserResponse(BaseModel):
     user_name: str
     
     class Config:
-        orm_mode = True
+        from_attributes = True #Ex orm_mode!!

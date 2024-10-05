@@ -11,12 +11,12 @@ user_router = APIRouter()
 
 @user_router.get('/{i}', tags=['Users']) #Tag sirve para ser claro en la documentacion
 async def get_user_by_id(i:int, db: Session = Depends(get_db)) -> str:
-    
-    db_user: Users | None = db.query(Users).filter(Users.user_id == i).first()
-    if db_user is not None:
-        return db_user.user_name
-    else:
-        raise HTTPException(detail='User not found in database.', status_code=status.HTTP_404_NOT_FOUND)
+    return 'OK'
+    # db_user: Users | None = db.query(Users).filter(Users.user_id == i).first()
+    # if db_user is not None:
+    #     return db_user.user_name
+    # else:
+    #     raise HTTPException(detail='User not found in database.', status_code=status.HTTP_404_NOT_FOUND)
 
 @user_router.get('/', tags=['Users'], response_model=List[UserResponse])
 async def get_all_users(db: Session = Depends(get_db)):

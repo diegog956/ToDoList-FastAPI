@@ -11,22 +11,15 @@ app = FastAPI(title='ToDoList')
 
 #Los middleware son para todas o casi todas las rutas. (Ver Loggin o CORS)
 
-# @app.middleware('http')
-# async def defino_middle(request: Request, call_next):
-#     print(request.url.path)
-#     if request.url.path in ['/users']:
-        
-#         token = request.headers.get('Authorization')
-        
-#         if token is None:
-#             raise HTTPException(status_code=401, detail="Token missing")
-#         else:
-#             validate_token(token)
-    
-#     print('Boca')
-#     response = await call_next(request)
-    
-#     return response 
+@app.middleware('http')
+async def defino_middle(request: Request, call_next):
+    print(f"Method: {request.method}\n")
+    print(f"URL: {request.url}\n")
+    print(f"Query Params: {request.query_params}\n")
+    print(f"Headers: {request.headers}\n")
+    print(f"Client: {request.client}\n")
+    response = await call_next(request)
+    return response 
 
 @app.get('/')
 def home():
