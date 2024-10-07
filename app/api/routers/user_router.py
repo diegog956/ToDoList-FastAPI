@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Depends, HTTPException
+from fastapi import APIRouter, Request, Response, status, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from api.schemas.user_schema import UserSchemaCreate, UserResponse
 from api.dependencies.database import get_db
@@ -9,7 +9,7 @@ import bcrypt
 
 user_router = APIRouter()
 
-@user_router.get('/{i}', tags=['Users']) #Tag sirve para ser claro en la documentacion
+@user_router.get('/{i}', tags=['Users'], status_code=status.HTTP_200_OK) #Tag sirve para ser claro en la documentacion
 async def get_user_by_id(i:int, db: Session = Depends(get_db)) -> str:
     return 'OK'
     # db_user: Users | None = db.query(Users).filter(Users.user_id == i).first()

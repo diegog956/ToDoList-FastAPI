@@ -10,3 +10,9 @@ def check_pass(hashed_pass:str, plain_pass:str)-> bool:
 
     encode_pass = plain_pass.encode('utf-8')
     return True if bcrypt.checkpw(encode_pass, hashed_pass) else False
+
+
+import datetime
+time = datetime.datetime.now(datetime.timezone.utc)
+print(time)
+print(time + datetime.timedelta(seconds=2))
